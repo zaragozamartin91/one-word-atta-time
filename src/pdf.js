@@ -3325,32 +3325,7 @@ var isPostMessageTransfersDisabled = false;
 var pdfjsFilePath = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : null;
 var fakeWorkerFilesLoader = null;
 var useRequireEnsure = false;
-{
-  if (typeof window === 'undefined') {
-    isWorkerDisabled = true;
-    if (typeof require.ensure === 'undefined') {
-      require.ensure = require('node-ensure');
-    }
-    useRequireEnsure = true;
-  } else if (typeof require !== 'undefined' && typeof require.ensure === 'function') {
-    useRequireEnsure = true;
-  }
-  if (typeof requirejs !== 'undefined' && requirejs.toUrl) {
-    workerSrc = requirejs.toUrl('pdfjs-dist/build/pdf.worker.js');
-  }
-  var dynamicLoaderSupported = typeof requirejs !== 'undefined' && requirejs.load;
-  fakeWorkerFilesLoader = useRequireEnsure ? function (callback) {
-    require.ensure([], function () {
-      var worker;
-      worker = require('./pdf.worker.js');
-      callback(worker.WorkerMessageHandler);
-    });
-  } : dynamicLoaderSupported ? function (callback) {
-    requirejs(['pdfjs-dist/build/pdf.worker'], function (worker) {
-      callback(worker.WorkerMessageHandler);
-    });
-  } : null;
-}
+
 var PDFNetworkStream;
 function setPDFNetworkStreamClass(cls) {
   PDFNetworkStream = cls;
