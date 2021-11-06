@@ -18633,10 +18633,84 @@ function extend() {
 }
 
 },{}],95:[function(require,module,exports){
+const arrayBufferToBuffer = require('arraybuffer-to-buffer');
+const pdf = require('./pdf-parse');
+
+module.exports = class PdfReader {
+    /**
+     * Parses a pdf file
+     * @param {File} file Input file
+     * @returns {Promise<{numpages:number, text:string}>} File data
+     */
+    parsePdfFile(file) {
+        return this.readFileAsArrayBuffer(file)
+            .then(fileArrayBuffer => arrayBufferToBuffer(fileArrayBuffer))
+            .then(fileBuffer => pdf(fileBuffer))
+            .then(data => this.peekPdf(data))
+            .then(data => {
+                const { numpages, text } = data
+                return { numpages, text }
+            })
+            .catch(reason => {
+                console.error("Error while processing file:", reason)
+            })
+    }
+
+    /**
+     * Parses file as ArrayBuffer
+     * @param {File} file File data 
+     * @returns {Promise<ArrayBuffer>} File data
+     */
+    readFileAsArrayBuffer(file) {
+        console.log("Reading file")
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                /** @type {ArrayBuffer} */ const buffer = event.target.result;
+                console.log("Successfully read file into array buffer")
+                console.log(buffer);
+                console.log(buffer.byteLength);
+                resolve(buffer);
+            };
+
+            reader.onerror = function (event) {
+                reject(event.target.error);
+            }
+
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
+    /**
+     * Peeks
+     *  pdf file data
+     * @param {pdf.Result} data Pdf file data
+     * @returns {pdf.Result} Pdf param
+     */
+    peekPdf(data) {
+        // number of pages
+        console.log(data.numpages);
+        // number of rendered pages
+        console.log(data.numrender);
+        // PDF info
+        console.log(data.info);
+        // PDF metadata
+        console.log(data.metadata);
+        // PDF.js version
+        // check https://mozilla.github.io/pdf.js/getting_started/
+        console.log(data.version);
+        // PDF text
+        console.log(data.text);
+
+        return data;
+    }
+}
+
+},{"./pdf-parse":97,"arraybuffer-to-buffer":1}],96:[function(require,module,exports){
 // IMPORTS ========================================================================
 
-const pdf = require('./pdf-parse');
-const arrayBufferToBuffer = require('arraybuffer-to-buffer');
+const PdfReader = require('./PdfReader')
 
 
 // DOM LOGIC ========================================================================
@@ -18649,13 +18723,8 @@ document.onreadystatechange = () => {
             const selectedFile = fileInput.files[0];
             console.log({ selectedFile });
 
-            readFileAsArrayBuffer(selectedFile)
-                .then(fileArrayBuffer => arrayBufferToBuffer(fileArrayBuffer))
-                .then(fileBuffer => pdf(fileBuffer))
-                .then(data => handlePdfFileData(data))
-                .catch(reason => {
-                    console.error("Error while processing file:", reason)
-                })
+            const pdfReader = new PdfReader()
+            pdfReader.parsePdfFile(selectedFile)
         }
     }
 };
@@ -18664,49 +18733,7 @@ document.onreadystatechange = () => {
 // API ========================================================================
 
 
-function readFileAsArrayBuffer(file) {
-    console.log("Reading file")
-
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            /** @type {ArrayBuffer} */ const buffer = event.target.result;
-            console.log("Successfully read file into array buffer")
-            console.log(buffer);
-            console.log(buffer.byteLength);
-            resolve(buffer);
-        };
-
-        reader.onerror = function (event) {
-            reject(event.target.error);
-        }
-
-        reader.readAsArrayBuffer(file);
-    });
-}
-
-/**
- * Handles pdf file data
- * @param {pdf.Result} data Pdf file data
- */
-function handlePdfFileData(data) {
-    // number of pages
-    console.log(data.numpages);
-    // number of rendered pages
-    console.log(data.numrender);
-    // PDF info
-    console.log(data.info);
-    // PDF metadata
-    console.log(data.metadata);
-    // PDF.js version
-    // check https://mozilla.github.io/pdf.js/getting_started/
-    console.log(data.version);
-    // PDF text
-    console.log(data.text);
-
-    return true;
-}
-},{"./pdf-parse":96,"arraybuffer-to-buffer":1}],96:[function(require,module,exports){
+},{"./PdfReader":95}],97:[function(require,module,exports){
 var PDFJS = null;
 
 function render_page(pageData) {
@@ -18810,7 +18837,7 @@ async function PDF(dataBuffer, options) {
 
 module.exports = PDF;
 
-},{"./pdf.js":97}],97:[function(require,module,exports){
+},{"./pdf.js":98}],98:[function(require,module,exports){
 (function (process,global,Buffer){(function (){
 /* Copyright 2017 Mozilla Foundation
  *
@@ -37326,4 +37353,4 @@ exports.NetworkManager = NetworkManager;
 });
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"_process":44,"buffer":12,"fs":11,"http":65,"https":26,"url":87,"zlib":10}]},{},[95]);
+},{"_process":44,"buffer":12,"fs":11,"http":65,"https":26,"url":87,"zlib":10}]},{},[96]);
