@@ -1,19 +1,26 @@
 <html>
 
 <head>
-  <title>One Word atta time</title>
-  <link rel="stylesheet" href="/stylesheets/index.css">
+    <title>One Word atta time</title>
+    <link rel="stylesheet" href="/stylesheets/index.css">
 </head>
 
 <body>
-  <div class="container">
-    <h1>One Word atta time</h1>
-    <p>Let me read that file for you</p>
+    <div class="container">
+        <h1>One Word atta time</h1>
+        <p>Let me read that file for you</p>
 
-    <input type="file" name="textFileInput" id="input" />
-  </div>
+        <input type="file" name="textFileInput" id="input" />
+    </div>
 
-  <script src="javascripts/front-bundle.js"></script>
+    <script src="javascripts/lib/pdfjs/pdf.js"></script>
+    <script>
+        // Loaded via <script> tag, create shortcut to access PDF.js exports.
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+        // The workerSrc property shall be specified.
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'javascripts/lib/pdfjs/pdf.worker.js';
+    </script>
+    <script type="module" src="javascripts/index.js"></script>
 </body>
 
 </html>
