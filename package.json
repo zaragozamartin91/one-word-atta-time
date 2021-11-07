@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "build": "browserify ./src/front.js -o ./public/javascripts/front-bundle.js",
     "watch": "watchify ./src/front.js -o ./public/javascripts/front-bundle.js",
-    "watch-react": "npx babel --watch src --out-dir ./public/javascripts --presets react-app/prod"
+    "watch-react": "npx babel --watch public/javascripts/components --out-dir ./public/javascripts/bundled --presets react-app/prod"
   },
   "dependencies": {
     "arraybuffer-to-buffer": "^0.0.7",
