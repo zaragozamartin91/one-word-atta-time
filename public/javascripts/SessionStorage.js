@@ -1,3 +1,5 @@
+const SESSION_KEY = "oneWordAttaTime"
+
 export default class SessionStorage {
     storeNumber(key, num) {
         sessionStorage.setItem(key, num)
@@ -8,13 +10,21 @@ export default class SessionStorage {
         return Number.parseInt(snum)
     }
 
-    storeArray(key, arr) {
-        const json = JSON.stringify(arr)
+    storeObject(key, obj) {
+        const json = JSON.stringify(obj)
         sessionStorage.setItem(key, json)
     }
 
-    readArray(key) {
-        const arr = sessionStorage.getItem(key)
-        return JSON.parse(arr)
+    readObject(key) {
+        const obj = sessionStorage.getItem(key)
+        return JSON.parse(obj)
+    }
+
+    storeAppSession(obj) {
+        this.storeObject(SESSION_KEY, obj)
+    }
+
+    readAppSession() {
+        this.readObject(SESSION_KEY)
     }
 }

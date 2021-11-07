@@ -13,11 +13,9 @@ document.onreadystatechange = () => {
             pdfReader.parsePdfFile(selectedFile)
                 .then(texts => {
                     console.log(texts)
-                    const { numpages, lines } = texts
                     console.log("Saving text data into session storage")
                     const ss = new SessionStorage()
-                    ss.storeNumber("numpages", numpages)
-                    ss.storeArray("lines", lines)
+                    ss.storeAppSession(texts)
                 }).catch(reason => {
                     console.error("Error occurred while processing text file")
                     console.error(reason)
