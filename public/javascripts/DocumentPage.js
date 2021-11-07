@@ -20,4 +20,8 @@ export default class DocumentPage {
     asObject() {
         return { page: this.page, lines: this.lines }
     }
+
+    static fromObject({ page, lines }) {
+        return new DocumentPage(page, lines)
+    }
 }

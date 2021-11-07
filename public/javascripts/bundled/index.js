@@ -10,6 +10,10 @@ import PdfReader from '../PdfReader.js';
 import SessionStorage from '../SessionStorage.js';
 
 var SuccessPrompt = function SuccessPrompt(props) {
+    function redirectToWordPlayer() {
+        window.location.href = '/word_player.html';
+    }
+
     if (props.fileParseSuccess) {
         return React.createElement(
             'div',
@@ -21,7 +25,7 @@ var SuccessPrompt = function SuccessPrompt(props) {
             ),
             React.createElement(
                 'button',
-                null,
+                { onClick: redirectToWordPlayer },
                 'Read my file'
             )
         );

@@ -25,6 +25,6 @@ export default class SessionStorage {
     }
 
     readAppSession() {
-        this.readObject(SESSION_KEY)
+        return this.readObject(SESSION_KEY)
     }
 }
