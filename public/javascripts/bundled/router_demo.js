@@ -1,5 +1,4 @@
-import PdfReader from '../PdfReader.js'
-import SessionStorage from '../SessionStorage.js'
+import SessionStorage from '../SessionStorage.js';
 
 new SessionStorage();
 

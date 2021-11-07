@@ -1,6 +1,6 @@
-import SessionStorage from '../SessionStorage'
+import SessionStorage from '../SessionStorage.js'
 
-new SessionStorage()
+new SessionStorage();
 
 const Link = ReactRouterDOM.Link;
 const Route = ReactRouterDOM.Route;
