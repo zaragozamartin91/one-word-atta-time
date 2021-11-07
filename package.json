@@ -7,7 +7,8 @@
     "build": "browserify ./src/front.js -o ./public/javascripts/front-bundle.js",
     "watch": "watchify ./src/front.js -o ./public/javascripts/front-bundle.js",
     "watch-react": "npx babel --watch public/javascripts/components --out-dir ./public/javascripts/bundled --presets react-app/prod",
-    "bundle-react": "npx babel public/javascripts/components --out-file ./public/javascripts/bundled/bundled-components.js --presets react-app/prod"
+    "bundle-react": "npx babel public/javascripts/components --out-file ./public/javascripts/bundled/bundled-components.js --presets react-app/prod",
+    "setup-docs": "node ./setup_docs.js"
   },
   "dependencies": {
     "arraybuffer-to-buffer": "^0.0.7",
@@ -17,6 +18,7 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@alumna/reflect": "^1.0.5",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "browserify": "^17.0.0",
