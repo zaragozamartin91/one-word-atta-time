@@ -9,13 +9,13 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>One Word atta time</h1>
-        <p>Let me read that file for you</p>
+    <div id="root"></div>
 
-        <input type="file" name="textFileInput" id="input" />
-    </div>
+    <!-- IMPORTING REACT -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
 
+    <!-- IMPORTING PDFJS -->
     <script src="javascripts/lib/pdfjs/pdf.js"></script>
     <script>
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
@@ -23,7 +23,8 @@
         // The workerSrc property shall be specified.
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'javascripts/lib/pdfjs/pdf.worker.js';
     </script>
-    <script type="module" src="javascripts/index.js"></script>
+    
+    <script type="module" src="javascripts/bundled/index.js"></script>
 </body>
 
 </html>

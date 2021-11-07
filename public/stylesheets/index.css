@@ -12,3 +12,11 @@ body {
   justify-content: center;
   flex-direction: column;
 }
+
+#fileParseSuccessMessage {
+  background-color: #b8f0b8;
+}
+
+#fileParseErrorMessage {
+  background-color: #f3be8c;
+}
