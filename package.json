@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "build": "browserify ./src/front.js -o ./public/javascripts/front-bundle.js",
-    "watch": "watchify ./src/front.js -o ./public/javascripts/front-bundle.js"
+    "watch": "watchify ./src/front.js -o ./public/javascripts/front-bundle.js",
+    "watch-react": "npx babel --watch src --out-dir ./public/javascripts --presets react-app/prod"
   },
   "dependencies": {
     "arraybuffer-to-buffer": "^0.0.7",
@@ -15,6 +16,8 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "browserify": "^17.0.0",
     "watchify": "^4.0.0",
     "webpack": "^5.61.0",
