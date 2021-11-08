@@ -24,9 +24,13 @@ var SuccessPrompt = function SuccessPrompt(props) {
                 props.fileParseSuccess
             ),
             React.createElement(
-                'button',
-                { onClick: redirectToWordPlayer },
-                'Read my file'
+                'a',
+                { href: 'word_player.html' },
+                React.createElement(
+                    'button',
+                    null,
+                    'Read my file'
+                )
             )
         );
     } else if (props.fileParseError) {

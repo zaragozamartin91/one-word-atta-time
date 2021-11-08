@@ -2,14 +2,10 @@ import PdfReader from '../PdfReader.js'
 import SessionStorage from '../SessionStorage.js'
 
 const SuccessPrompt = props => {
-    function redirectToWordPlayer() {
-        window.location.href = '/word_player.html'
-    }
-
     if (props.fileParseSuccess) {
         return (<div>
             <p id="fileParseSuccessMessage">{props.fileParseSuccess}</p>
-            <button onClick={redirectToWordPlayer}>Read my file</button>
+            <a href="word_player.html"><button >Read my file</button></a>
         </div>)
     } else if (props.fileParseError) {
         return (<div>
