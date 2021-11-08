@@ -13,10 +13,14 @@ body {
   flex-direction: column;
 }
 
-#fileParseSuccessMessage {
-  background-color: #b8f0b8;
+#playerControls {
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
-#fileParseErrorMessage {
-  background-color: #f3be8c;
+#playerControls > button {
+  width: 100%;
+  margin: 1%;
 }
