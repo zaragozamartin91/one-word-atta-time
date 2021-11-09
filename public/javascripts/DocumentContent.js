@@ -40,7 +40,7 @@ export default class DocumentContent {
     }
 
     get words() {
-        return this.lines.flatMap(ln => ln.split(' ')).map(wd => wd.trim())
+        return this.documentPages.flatMap(dp => dp.words)
     }
 
     /**
