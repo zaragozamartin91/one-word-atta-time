@@ -1,1 +1,3 @@
 node_modules
+
+trigger_git_pages_build.sh

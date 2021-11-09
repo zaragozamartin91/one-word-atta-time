@@ -1,4 +1,4 @@
-import PdfReader from '../PdfReader.js'
+import GenericFileReader from '../GenericFileReader.js'
 import SessionStorage from '../SessionStorage.js'
 
 const SuccessPrompt = props => {
@@ -39,8 +39,8 @@ class Main extends React.Component {
         console.log({ selectedFile })
         const self = this
 
-        const pdfReader = new PdfReader({ ignoreBlanks: true })
-        pdfReader.parsePdfFile(selectedFile)
+        const genericFileReader = new GenericFileReader()
+        genericFileReader.parseFile(selectedFile)
             .then(documentContent => {
                 console.log(documentContent)
                 console.log("Saving text data into session storage")

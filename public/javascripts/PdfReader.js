@@ -1,11 +1,13 @@
 import DocumentContent from "./DocumentContent.js"
 import DocumentPage from "./DocumentPage.js"
+import ReadFileAsArrayBuffer from "./ReadFileAsArrayBuffer.js"
 
 export default class PdfReader {
   ignoreBlanks = false
 
   constructor({ ignoreBlanks } = { ignoreBlanks: false }) {
     this.ignoreBlanks = ignoreBlanks
+    this.readFileAsArrayBuffer = new ReadFileAsArrayBuffer().apply.bind(this)
   }
 
   /**
@@ -46,31 +48,5 @@ export default class PdfReader {
     }
 
     return promises
-  }
-
-  /**
-   * Parses file as ArrayBuffer
-   * @param {File} file File data 
-   * @returns {Promise<ArrayBuffer>} File data
-   */
-  readFileAsArrayBuffer(file) {
-    console.log("Reading file")
-
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = function (event) {
-        /** @type {ArrayBuffer} */ const buffer = event.target.result
-        console.log("Successfully read file into array buffer")
-        console.log(buffer)
-        console.log(buffer.byteLength)
-        resolve(buffer)
-      }
-
-      reader.onerror = function (event) {
-        reject(event.target.error)
-      }
-
-      reader.readAsArrayBuffer(file)
-    })
   }
 }
