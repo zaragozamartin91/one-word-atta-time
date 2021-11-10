@@ -6,14 +6,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import PdfReader from '../PdfReader.js';
+import GenericFileReader from '../GenericFileReader.js';
 import SessionStorage from '../SessionStorage.js';
 
 var SuccessPrompt = function SuccessPrompt(props) {
-    function redirectToWordPlayer() {
-        window.location.href = '/word_player.html';
-    }
-
     if (props.fileParseSuccess) {
         return React.createElement(
             'div',
@@ -87,8 +83,8 @@ var Main = function (_React$Component) {
             console.log({ selectedFile: selectedFile });
             var self = this;
 
-            var pdfReader = new PdfReader({ ignoreBlanks: true });
-            pdfReader.parsePdfFile(selectedFile).then(function (documentContent) {
+            var genericFileReader = new GenericFileReader();
+            genericFileReader.parseFile(selectedFile).then(function (documentContent) {
                 console.log(documentContent);
                 console.log("Saving text data into session storage");
                 var ss = new SessionStorage();
