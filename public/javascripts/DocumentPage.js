@@ -61,15 +61,18 @@ export default class DocumentPage {
      * @returns True if this word contains an ellipsis
      */
     ellipsisMatch(w) {
-        return (w?.match(/\./g) || []).length > 1
+        const eliRex = /\.{2,}/
+        const word = w || ''
+        return eliRex.test(word)
+        // return (w?.match(/\./g) || []).length > 1
     }
 
     /**
      * Trims phrase and removes empty words from it
-     * @param {Array<String>} p Phrase to curate
+     * @param {Array<String>} phrase Phrase to curate
      * @returns Curated phrase
      */
-    curatePhrase(p) {
-        return p.map(s => s.trim()).filter(s => s.length > 0)
+    curatePhrase(phrase) {
+        return phrase.map(s => s.trim()).filter(s => s.length > 0)
     }
 }
