@@ -1,4 +1,4 @@
-import DocumentPage from '../public/javascripts/DocumentPage.js'
+import DocumentPage from '../docs/javascripts/DocumentPage.js'
 
 // Happy scenarios
 test('lines getter should split phrases by dot', () => {

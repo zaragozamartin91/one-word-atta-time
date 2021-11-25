@@ -1,7 +1,7 @@
 const fs = require('fs');
 const pdf = require('pdf-parse');
  
-let dataBuffer = fs.readFileSync('public\\files\\ep3-transcript.pdf');
+let dataBuffer = fs.readFileSync('docs\\files\\ep3-transcript.pdf');
  
 pdf(dataBuffer).then(function(data) {
  

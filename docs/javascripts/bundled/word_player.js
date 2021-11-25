@@ -108,7 +108,7 @@ var WordPlayer = function (_React$Component3) {
 
         var _this3 = _possibleConstructorReturn(this, (WordPlayer.__proto__ || Object.getPrototypeOf(WordPlayer)).call(this, props));
 
-        _this3.state = { paused: true, word: 'Click play button to start reading' };
+        _this3.state = { paused: true, word: 'Press play button to begin reading' };
 
         var ss = new SessionStorage();
         var appSessionData = ss.readAppSession();
