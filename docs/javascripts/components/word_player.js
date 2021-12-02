@@ -43,7 +43,7 @@ class WordPlayerDisplay extends React.Component {
 class WordPlayer extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { paused: true, word: 'Click play button to start reading' }
+        this.state = { paused: true, word: 'Press play button to begin reading' }
 
         const ss = new SessionStorage()
         const appSessionData = ss.readAppSession()

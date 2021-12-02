@@ -8,7 +8,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('public'))
+app.use(express.static('docs'))
 
 
 export default app;
