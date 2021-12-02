@@ -37,9 +37,9 @@ export default class DocumentPage {
     get phrases() {
         const pageText = this.lines.reduce((accum, curr) => accum.concat(' ', curr))
         const eliRex = /\.{2,}/
-        const eliStub = '__3ll1p515__'
+        const eliStub = '__3ll1p__'
         const curatedText = pageText.replace(eliRex, eliStub)
-        return curatedText.split(/(\. | \.)/)               // dot&space = sentence end
+        return curatedText.split(/(\. +| +\.| +\. +)/)      // dot&space = sentence end
             .map(p => p.trim())                             // trim phrase
             .filter(p => p.length > 0)                      // remove empty phrases
             .filter(p => p !== '.')                         // remove 'JUST DOTS' phrases
