@@ -30,7 +30,7 @@ class Configuration extends React.Component {
 
     render() {
         return (
-            <form action="/word_player.html" onSubmit={this.saveAppConfig.bind(this)}>
+            <form action="word_player.html" onSubmit={this.saveAppConfig.bind(this)}>
                 <div class="container">
                     <WordsPerMinuteSelector selected={this.state.wordsPerMinute} onChange={this.onWordsPerMinuteChange.bind(this)} />
                     <button>Save</button>

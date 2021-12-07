@@ -56,7 +56,7 @@ var Configuration = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 "form",
-                { action: "/word_player.html", onSubmit: this.saveAppConfig.bind(this) },
+                { action: "word_player.html", onSubmit: this.saveAppConfig.bind(this) },
                 React.createElement(
                     "div",
                     { "class": "container" },
