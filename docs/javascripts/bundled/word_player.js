@@ -9,116 +9,114 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import SessionStorage from '../SessionStorage.js';
 import DocumentContent from '../DocumentContent.js';
 import DocumentNavigator from '../DocumentNavigator.js';
+import ReaderConfig from '../ReaderConfig.js';
 
-var WordPlayerControls = function (_React$Component) {
-    _inherits(WordPlayerControls, _React$Component);
+var WordPlayerControls = function WordPlayerControls(props) {
+    var playSymbol = "▶";
+    var pauseSymbol = "||";
+    var rewindSymbol = "<<";
+    var forwardSymbol = ">>";
 
-    function WordPlayerControls(props) {
-        _classCallCheck(this, WordPlayerControls);
+    return props.paused ?
+    // paused scenario
+    React.createElement(
+        'div',
+        { id: 'playerControls' },
+        React.createElement(
+            'button',
+            null,
+            rewindSymbol
+        ),
+        React.createElement(
+            'button',
+            { onClick: props.onPlay },
+            playSymbol
+        ),
+        React.createElement(
+            'button',
+            null,
+            forwardSymbol
+        )
+    ) :
+    // playing scenario
+    React.createElement(
+        'div',
+        { id: 'playerControls' },
+        React.createElement(
+            'button',
+            null,
+            rewindSymbol
+        ),
+        React.createElement(
+            'button',
+            { onClick: props.onPause },
+            pauseSymbol
+        ),
+        React.createElement(
+            'button',
+            null,
+            forwardSymbol
+        )
+    );
+};
 
-        return _possibleConstructorReturn(this, (WordPlayerControls.__proto__ || Object.getPrototypeOf(WordPlayerControls)).call(this, props));
-    }
+var WordPlayerDisplay = function WordPlayerDisplay(props) {
+    return React.createElement(
+        'p',
+        null,
+        props.word
+    );
+};
 
-    _createClass(WordPlayerControls, [{
-        key: 'render',
-        value: function render() {
-            var playSymbol = "|>";
-            var pauseSymbol = "||";
-            var rewindSymbol = "<<";
-            var forwardSymbol = ">>";
-
-            return this.props.paused ?
-            // paused scenario
+var ConfigButton = function ConfigButton(props) {
+    return React.createElement(
+        'div',
+        { id: 'configButton' },
+        React.createElement(
+            'a',
+            { href: 'config.html' },
             React.createElement(
-                'div',
-                { id: 'playerControls' },
-                React.createElement(
-                    'button',
-                    null,
-                    rewindSymbol
-                ),
-                React.createElement(
-                    'button',
-                    { onClick: this.props.onPlay },
-                    playSymbol
-                ),
-                React.createElement(
-                    'button',
-                    null,
-                    forwardSymbol
-                )
-            ) :
-            // playing scenario
-            React.createElement(
-                'div',
-                { id: 'playerControls' },
-                React.createElement(
-                    'button',
-                    null,
-                    rewindSymbol
-                ),
-                React.createElement(
-                    'button',
-                    { onClick: this.props.onPause },
-                    pauseSymbol
-                ),
-                React.createElement(
-                    'button',
-                    null,
-                    forwardSymbol
-                )
-            );
-        }
-    }]);
-
-    return WordPlayerControls;
-}(React.Component);
-
-var WordPlayerDisplay = function (_React$Component2) {
-    _inherits(WordPlayerDisplay, _React$Component2);
-
-    function WordPlayerDisplay(props) {
-        _classCallCheck(this, WordPlayerDisplay);
-
-        var _this2 = _possibleConstructorReturn(this, (WordPlayerDisplay.__proto__ || Object.getPrototypeOf(WordPlayerDisplay)).call(this, props));
-
-        _this2.state = {};
-        return _this2;
-    }
-
-    _createClass(WordPlayerDisplay, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'p',
+                'button',
                 null,
-                this.props.word
-            );
-        }
-    }]);
+                React.createElement('i', { 'class': 'fa fa-cog', 'aria-hidden': 'true' })
+            )
+        )
+    );
+};
 
-    return WordPlayerDisplay;
-}(React.Component);
+var WordPlayer = function (_React$Component) {
+    _inherits(WordPlayer, _React$Component);
 
-var WordPlayer = function (_React$Component3) {
-    _inherits(WordPlayer, _React$Component3);
-
-    function WordPlayer(props) {
+    /** @type{DocumentContent} */function WordPlayer(props) {
         _classCallCheck(this, WordPlayer);
 
-        var _this3 = _possibleConstructorReturn(this, (WordPlayer.__proto__ || Object.getPrototypeOf(WordPlayer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (WordPlayer.__proto__ || Object.getPrototypeOf(WordPlayer)).call(this, props));
 
-        _this3.state = { paused: true, word: 'Press play button to begin reading' };
+        _this.documentContent = null;
+        _this.documentNavigator = null;
+        _this.documentReady = false;
+        _this.appConfig = null;
+
+        _this.state = { paused: true, word: 'Press play button to begin reading' };
 
         var ss = new SessionStorage();
         var appSessionData = ss.readAppSession();
         console.log('Got session data:');
         console.log(appSessionData);
-        _this3.documentContent = DocumentContent.fromObject(appSessionData);
-        _this3.documentNavigator = new DocumentNavigator(_this3.documentContent);
-        _this3.documentNavigator.restart();
-        return _this3;
-    }
+
+        var appConfig = ss.readAppConfig() || ReaderConfig.getDefault().asObject();
+        _this.appConfig = new ReaderConfig(appConfig);
+
+        if (appSessionData) {
+            _this.documentContent = DocumentContent.fromObject(appSessionData);
+            _this.documentNavigator = new DocumentNavigator(_this.documentContent);
+            _this.documentNavigator.restart();
+            _this.documentReady = true;
+        }
+        return _this;
+    } // document is ready to be navigated
+    /** @type{ReaderConfig} */
+    /** @type{DocumentNavigator} */
 
     _createClass(WordPlayer, [{
         key: 'render',
@@ -127,37 +125,49 @@ var WordPlayer = function (_React$Component3) {
                 'div',
                 { 'class': 'container' },
                 React.createElement(WordPlayerDisplay, { word: this.state.word }),
-                React.createElement(WordPlayerControls, { paused: this.state.paused, onPlay: this.play.bind(this), onPause: this.pause.bind(this) })
+                React.createElement(WordPlayerControls, { paused: this.state.paused, onPlay: this.play.bind(this), onPause: this.pause.bind(this) }),
+                React.createElement(ConfigButton, null)
             );
         }
     }, {
         key: 'play',
         value: function play() {
-            var _this4 = this;
+            var _this2 = this;
 
             console.log('Reading words!');
             var dn = this.documentNavigator;
 
+            var delayMs = this.appConfig.delayMs;
+            console.log('delayMs = ', delayMs);
+
             this.intervalId = window.setInterval(function () {
                 var nextWord = dn.currentWord;
                 dn.next();
-                _this4.setState({ paused: false, word: nextWord });
-            }, 300);
+                _this2.setState({ paused: false, word: nextWord });
+            }, delayMs);
         }
     }, {
         key: 'pause',
         value: function pause() {
             console.log('Pausing!');
             window.clearInterval(this.intervalId);
-            var stat = this.state;
-            stat.paused = true;
-            this.setState(stat);
+            var newState = Object.assign({}, this.state, { paused: true });
+            this.setState(newState);
         }
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(_nextProps, _nextState) {
+            /* If document was completely processed , then pause navigation */
             if (this.documentNavigator.done) {
                 this.pause();
+            }
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            /* If we got null document session data, redirect to main site */
+            if (!this.documentReady) {
+                window.location.href = '/';
             }
         }
     }]);

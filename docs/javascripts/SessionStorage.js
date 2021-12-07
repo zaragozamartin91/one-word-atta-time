@@ -1,4 +1,5 @@
 const SESSION_KEY = "oneWordAttaTime"
+const CONFIG_KEY = "oneWordAttaTimeConfig"
 
 export default class SessionStorage {
     storeNumber(key, num) {
@@ -26,5 +27,13 @@ export default class SessionStorage {
 
     readAppSession() {
         return this.readObject(SESSION_KEY)
+    }
+
+    storeAppConfig(obj) {
+        this.storeObject(CONFIG_KEY, obj)
+    }
+
+    readAppConfig() {
+        return this.readObject(CONFIG_KEY)
     }
 }
