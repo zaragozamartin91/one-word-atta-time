@@ -20,24 +20,24 @@ body {
   justify-content: space-evenly;
 }
 
-#configButton {
-  width: 50%;
-}
-
 #playerControls > button {
   width: 100%;
   margin: 1%;
 }
 
-#configButton a {
+
+.configButtons {
+  width: 50%;
+}
+
+.configButtons a {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-#configButton button {
+.configButtons button {
   width: 100%;
   margin: 1%;
 }
-

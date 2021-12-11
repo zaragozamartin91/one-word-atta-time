@@ -71,7 +71,7 @@ var WordPlayerDisplay = function WordPlayerDisplay(props) {
 var ConfigButton = function ConfigButton(props) {
     return React.createElement(
         'div',
-        { id: 'configButton' },
+        { className: 'configButtons' },
         React.createElement(
             'a',
             { href: 'config.html' },
@@ -79,6 +79,22 @@ var ConfigButton = function ConfigButton(props) {
                 'button',
                 null,
                 React.createElement('i', { 'class': 'fa fa-cog', 'aria-hidden': 'true' })
+            )
+        )
+    );
+};
+
+var GoBackButton = function GoBackButton(props) {
+    return React.createElement(
+        'div',
+        { className: 'configButtons' },
+        React.createElement(
+            'a',
+            { href: 'index.html' },
+            React.createElement(
+                'button',
+                null,
+                React.createElement('i', { 'class': 'fa fa-arrow-left', 'aria-hidden': 'true' })
             )
         )
     );
@@ -126,7 +142,8 @@ var WordPlayer = function (_React$Component) {
                 { 'class': 'container' },
                 React.createElement(WordPlayerDisplay, { word: this.state.word }),
                 React.createElement(WordPlayerControls, { paused: this.state.paused, onPlay: this.play.bind(this), onPause: this.pause.bind(this) }),
-                React.createElement(ConfigButton, null)
+                React.createElement(ConfigButton, null),
+                React.createElement(GoBackButton, null)
             );
         }
     }, {

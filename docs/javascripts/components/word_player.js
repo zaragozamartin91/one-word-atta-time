@@ -29,7 +29,7 @@ const WordPlayerDisplay = props => {
 }
 
 const ConfigButton = props => {
-    return (<div id="configButton">
+    return (<div className="configButtons">
         <a href="config.html">
             <button>
                 <i class="fa fa-cog" aria-hidden="true"></i>
@@ -38,6 +38,15 @@ const ConfigButton = props => {
     </div>)
 }
 
+const GoBackButton = props => {
+    return (<div className="configButtons">
+        <a href="index.html">
+            <button>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+        </a>
+    </div>)
+}
 
 class WordPlayer extends React.Component {
     /** @type{DocumentContent} */ documentContent = null
@@ -71,6 +80,7 @@ class WordPlayer extends React.Component {
                 <WordPlayerDisplay word={this.state.word} />
                 <WordPlayerControls paused={this.state.paused} onPlay={this.play.bind(this)} onPause={this.pause.bind(this)} />
                 <ConfigButton />
+                <GoBackButton />
             </div>
         )
     }
