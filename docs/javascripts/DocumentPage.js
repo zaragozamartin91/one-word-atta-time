@@ -1,3 +1,5 @@
+import Prhase from './Phrase.js'
+
 export default class DocumentPage {
     /** @type{number} */        page = 0
     /** @type{Array<String>} */ lines = []
@@ -26,13 +28,11 @@ export default class DocumentPage {
     }
 
     get words() {
-        return this.phrases
-            .flatMap(p => p.split(/ +/))    // split phrases by spaces
-            .map(w => w.trim())             // trim words
+        return this.phrases.flatMap(p => p.words)
     }
 
     /**
-     * @returns {Array<string>} This page's phrases
+     * @returns {Array<Prhase>} This page's phrases
      */
     get phrases() {
         const pageText = this.lines.reduce((accum, curr) => accum.concat(' ', curr))
@@ -45,5 +45,6 @@ export default class DocumentPage {
             .filter(p => p !== '.')                         // remove 'JUST DOTS' phrases
             .map(p => p.replace(eliStub, '...'))            // restore ellipsis for proper content
             .map(p => p.endsWith('.') ? p : p.concat('.'))  // end prhases with dots
+            .map(p => new Prhase(p))
     }
 }
