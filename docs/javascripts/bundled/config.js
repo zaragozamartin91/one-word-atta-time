@@ -35,6 +35,38 @@ var WordsPerMinuteSelector = function WordsPerMinuteSelector(props) {
     );
 };
 
+var TextSizeSelector = function TextSizeSelector(props) {
+    var optionValues = ReaderConfig.getFontSizeKeys();
+    var options = optionValues.map(function (v) {
+        return React.createElement(
+            "option",
+            { value: v, selected: props.selected == v },
+            v
+        );
+    });
+    var fontSizePx = ReaderConfig.getFontSizePx(props.selected);
+
+    return React.createElement(
+        "div",
+        null,
+        React.createElement(
+            "label",
+            { "for": "fontSize" },
+            "Text size: "
+        ),
+        React.createElement(
+            "select",
+            { name: "fontSize", id: "fontSize", onChange: props.onChange },
+            options
+        ),
+        React.createElement(
+            "p",
+            { style: { fontSize: fontSizePx } },
+            "Sample text"
+        )
+    );
+};
+
 var Configuration = function (_React$Component) {
     _inherits(Configuration, _React$Component);
 
@@ -47,7 +79,7 @@ var Configuration = function (_React$Component) {
 
         var sessionAppConfig = _this.sessionStorage.readAppConfig() || ReaderConfig.getDefault().asObject();
         var appConfig = new ReaderConfig(sessionAppConfig);
-        _this.state = { wordsPerMinute: appConfig.wordsPerMinute };
+        _this.state = { wordsPerMinute: appConfig.wordsPerMinute, fontSize: appConfig.fontSize };
         return _this;
     }
 
@@ -61,9 +93,10 @@ var Configuration = function (_React$Component) {
                     "div",
                     { "class": "container" },
                     React.createElement(WordsPerMinuteSelector, { selected: this.state.wordsPerMinute, onChange: this.onWordsPerMinuteChange.bind(this) }),
+                    React.createElement(TextSizeSelector, { selected: this.state.fontSize, onChange: this.onTextSizeChange.bind(this) }),
                     React.createElement(
                         "button",
-                        null,
+                        { id: "saveButton" },
                         "Save"
                     )
                 )
@@ -74,6 +107,13 @@ var Configuration = function (_React$Component) {
         value: function onWordsPerMinuteChange(e) {
             var wordsPerMinute = parseInt(e.target.value);
             var newState = Object.assign({}, this.state, { wordsPerMinute: wordsPerMinute });
+            this.setState(newState);
+        }
+    }, {
+        key: "onTextSizeChange",
+        value: function onTextSizeChange(e) {
+            var fontSize = e.target.value;
+            var newState = Object.assign({}, this.state, { fontSize: fontSize });
             this.setState(newState);
         }
     }, {

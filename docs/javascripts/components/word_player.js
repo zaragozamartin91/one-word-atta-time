@@ -25,7 +25,7 @@ const WordPlayerControls = props => {
 }
 
 const WordPlayerDisplay = props => {
-    return (<p>{props.word}</p>)
+    return (<p style={{ fontSize: props.fontSizePx }}>{props.word}</p>)
 }
 
 const ConfigButton = props => {
@@ -77,7 +77,7 @@ class WordPlayer extends React.Component {
     render() {
         return (
             <div class="container">
-                <WordPlayerDisplay word={this.state.word} />
+                <WordPlayerDisplay word={this.state.word} fontSizePx={this.appConfig.fontSizePx} />
                 <WordPlayerControls paused={this.state.paused} onPlay={this.play.bind(this)} onPause={this.pause.bind(this)} />
                 <ConfigButton />
                 <GoBackButton />

@@ -63,7 +63,7 @@ var WordPlayerControls = function WordPlayerControls(props) {
 var WordPlayerDisplay = function WordPlayerDisplay(props) {
     return React.createElement(
         'p',
-        null,
+        { style: { fontSize: props.fontSizePx } },
         props.word
     );
 };
@@ -140,7 +140,7 @@ var WordPlayer = function (_React$Component) {
             return React.createElement(
                 'div',
                 { 'class': 'container' },
-                React.createElement(WordPlayerDisplay, { word: this.state.word }),
+                React.createElement(WordPlayerDisplay, { word: this.state.word, fontSizePx: this.appConfig.fontSizePx }),
                 React.createElement(WordPlayerControls, { paused: this.state.paused, onPlay: this.play.bind(this), onPause: this.pause.bind(this) }),
                 React.createElement(ConfigButton, null),
                 React.createElement(GoBackButton, null)
