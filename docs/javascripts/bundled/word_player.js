@@ -17,46 +17,41 @@ var WordPlayerControls = function WordPlayerControls(props) {
     var rewindSymbol = "<<";
     var forwardSymbol = ">>";
 
+    var rewindButton = React.createElement(
+        'button',
+        { onClick: props.onRewind },
+        rewindSymbol
+    );
+    var forwardButton = React.createElement(
+        'button',
+        { onClick: props.onForward },
+        forwardSymbol
+    );
+
     return props.paused ?
     // paused scenario
     React.createElement(
         'div',
         { id: 'playerControls' },
-        React.createElement(
-            'button',
-            null,
-            rewindSymbol
-        ),
+        rewindButton,
         React.createElement(
             'button',
             { onClick: props.onPlay },
             playSymbol
         ),
-        React.createElement(
-            'button',
-            null,
-            forwardSymbol
-        )
+        forwardButton
     ) :
     // playing scenario
     React.createElement(
         'div',
         { id: 'playerControls' },
-        React.createElement(
-            'button',
-            null,
-            rewindSymbol
-        ),
+        rewindButton,
         React.createElement(
             'button',
             { onClick: props.onPause },
             pauseSymbol
         ),
-        React.createElement(
-            'button',
-            null,
-            forwardSymbol
-        )
+        forwardButton
     );
 };
 
@@ -68,7 +63,7 @@ var WordPlayerDisplay = function WordPlayerDisplay(props) {
     );
 };
 
-var ConfigButton = function ConfigButton(props) {
+var ConfigButton = function ConfigButton(_props) {
     return React.createElement(
         'div',
         { className: 'configButtons' },
@@ -84,7 +79,7 @@ var ConfigButton = function ConfigButton(props) {
     );
 };
 
-var GoBackButton = function GoBackButton(props) {
+var GoBackButton = function GoBackButton(_props) {
     return React.createElement(
         'div',
         { className: 'configButtons' },
@@ -103,15 +98,13 @@ var GoBackButton = function GoBackButton(props) {
 var WordPlayer = function (_React$Component) {
     _inherits(WordPlayer, _React$Component);
 
+    /** @type{Boolean} */
     /** @type{DocumentContent} */function WordPlayer(props) {
         _classCallCheck(this, WordPlayer);
 
         var _this = _possibleConstructorReturn(this, (WordPlayer.__proto__ || Object.getPrototypeOf(WordPlayer)).call(this, props));
 
-        _this.documentContent = null;
-        _this.documentNavigator = null;
         _this.documentReady = false;
-        _this.appConfig = null;
 
         _this.state = { paused: true, word: 'Press play button to begin reading' };
 
@@ -141,7 +134,13 @@ var WordPlayer = function (_React$Component) {
                 'div',
                 { 'class': 'container' },
                 React.createElement(WordPlayerDisplay, { word: this.state.word, fontSizePx: this.appConfig.fontSizePx }),
-                React.createElement(WordPlayerControls, { paused: this.state.paused, onPlay: this.play.bind(this), onPause: this.pause.bind(this) }),
+                React.createElement(WordPlayerControls, {
+                    paused: this.state.paused,
+                    onPlay: this.play.bind(this),
+                    onPause: this.pause.bind(this),
+                    onRewind: this.rewind.bind(this),
+                    onForward: this.forward.bind(this)
+                }),
                 React.createElement(ConfigButton, null),
                 React.createElement(GoBackButton, null)
             );
@@ -158,9 +157,14 @@ var WordPlayer = function (_React$Component) {
             console.log('delayMs = ', delayMs);
 
             this.intervalId = window.setInterval(function () {
-                var nextWord = dn.currentWord;
-                dn.next();
-                _this2.setState({ paused: false, word: nextWord });
+                if (dn.done) {
+                    console.log('Document exhausted');
+                    _this2.setState(Object.assign({}, _this2.state, { word: '★Document exhausted★' }));
+                    _this2.pause();
+                } else {
+                    var nextWord = dn.nextWord() || '';
+                    _this2.setState({ paused: false, word: nextWord });
+                }
             }, delayMs);
         }
     }, {
@@ -172,12 +176,20 @@ var WordPlayer = function (_React$Component) {
             this.setState(newState);
         }
     }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(_nextProps, _nextState) {
-            /* If document was completely processed , then pause navigation */
-            if (this.documentNavigator.done) {
-                this.pause();
-            }
+        key: 'rewind',
+        value: function rewind() {
+            console.log('Rewinding!');
+            this.documentNavigator.prevPhrase();
+            var newState = Object.assign({}, this.state, { word: '<<' });
+            this.setState(newState);
+        }
+    }, {
+        key: 'forward',
+        value: function forward() {
+            console.log('Forwarding!');
+            this.documentNavigator.nextPhrase();
+            var newState = Object.assign({}, this.state, { word: '>>' });
+            this.setState(newState);
         }
     }, {
         key: 'componentDidMount',

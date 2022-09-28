@@ -9,18 +9,21 @@ const WordPlayerControls = props => {
     const rewindSymbol = "<<"
     const forwardSymbol = ">>"
 
+    const rewindButton = <button onClick={props.onRewind}>{rewindSymbol}</button>
+    const forwardButton = <button onClick={props.onForward}>{forwardSymbol}</button>
+
     return props.paused ?
         // paused scenario
         (<div id="playerControls">
-            <button>{rewindSymbol}</button>
+            {rewindButton}
             <button onClick={props.onPlay}>{playSymbol}</button>
-            <button>{forwardSymbol}</button>
+            {forwardButton}
         </div>) :
         // playing scenario
         (<div id="playerControls">
-            <button>{rewindSymbol}</button>
+            {rewindButton}
             <button onClick={props.onPause}>{pauseSymbol}</button>
-            <button>{forwardSymbol}</button>
+            {forwardButton}
         </div>)
 }
 
@@ -28,7 +31,7 @@ const WordPlayerDisplay = props => {
     return (<p style={{ fontSize: props.fontSizePx }}>{props.word}</p>)
 }
 
-const ConfigButton = props => {
+const ConfigButton = _props => {
     return (<div className="configButtons">
         <a href="config.html">
             <button>
@@ -38,7 +41,7 @@ const ConfigButton = props => {
     </div>)
 }
 
-const GoBackButton = props => {
+const GoBackButton = _props => {
     return (<div className="configButtons">
         <a href="index.html">
             <button>
@@ -49,10 +52,10 @@ const GoBackButton = props => {
 }
 
 class WordPlayer extends React.Component {
-    /** @type{DocumentContent} */ documentContent = null
-    /** @type{DocumentNavigator} */ documentNavigator = null
-    documentReady = false // document is ready to be navigated
-    /** @type{ReaderConfig} */ appConfig = null
+    /** @type{DocumentContent} */   documentContent
+    /** @type{DocumentNavigator} */ documentNavigator
+    /** @type{Boolean} */           documentReady = false // document is ready to be navigated
+    /** @type{ReaderConfig} */      appConfig
 
     constructor(props) {
         super(props)
@@ -78,7 +81,13 @@ class WordPlayer extends React.Component {
         return (
             <div class="container">
                 <WordPlayerDisplay word={this.state.word} fontSizePx={this.appConfig.fontSizePx} />
-                <WordPlayerControls paused={this.state.paused} onPlay={this.play.bind(this)} onPause={this.pause.bind(this)} />
+                <WordPlayerControls
+                    paused={this.state.paused}
+                    onPlay={this.play.bind(this)}
+                    onPause={this.pause.bind(this)}
+                    onRewind={this.rewind.bind(this)}
+                    onForward={this.forward.bind(this)}
+                />
                 <ConfigButton />
                 <GoBackButton />
             </div>
@@ -93,9 +102,14 @@ class WordPlayer extends React.Component {
         console.log('delayMs = ', delayMs)
 
         this.intervalId = window.setInterval(() => {
-            const nextWord = dn.currentWord
-            dn.next()
-            this.setState({ paused: false, word: nextWord })
+            if(dn.done) {
+                console.log('Document exhausted')
+                this.setState({...this.state, word: '★Document exhausted★'})
+                this.pause()
+            } else {
+                const nextWord = dn.nextWord() || ''
+                this.setState({ paused: false, word: nextWord })
+            }
         }, delayMs)
     }
 
@@ -106,11 +120,18 @@ class WordPlayer extends React.Component {
         this.setState(newState)
     }
 
-    componentDidUpdate(_nextProps, _nextState) {
-        /* If document was completely processed , then pause navigation */
-        if (this.documentNavigator.done) {
-            this.pause()
-        }
+    rewind() {
+        console.log('Rewinding!')
+        this.documentNavigator.prevPhrase()
+        const newState = { ...this.state, word: '<<' }
+        this.setState(newState)
+    }
+
+    forward() {
+        console.log('Forwarding!')
+        this.documentNavigator.nextPhrase()
+        const newState = { ...this.state, word: '>>' }
+        this.setState(newState)
     }
 
     componentDidMount() {
