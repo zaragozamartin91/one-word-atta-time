@@ -26,3 +26,7 @@ Business logic modules and classes are located in docs/javascripts base dir
 - Expressjs is used as local server for testing
 - Run `npm start`
 - Open browser at http://localhost:3000/
+
+## App online
+
+The app is served at https://zaragozamartin91.github.io/one-word-atta-time/
