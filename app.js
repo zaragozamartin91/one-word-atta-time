@@ -8,7 +8,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('docs'))
+app.use('/one-word-atta-time', express.static('docs'))
 
 
 export default app;

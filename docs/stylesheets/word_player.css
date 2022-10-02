@@ -15,7 +15,7 @@ body {
 
 #playerControls {
   display: flex;
-  width: 50%;
+  width: 75%;
   flex-direction: row;
   justify-content: space-evenly;
 }
@@ -27,7 +27,7 @@ body {
 
 
 .configButtons {
-  width: 50%;
+  width: 75%;
 }
 
 .configButtons a {

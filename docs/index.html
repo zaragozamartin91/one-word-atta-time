@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="manifest.json">
 
     <title>One Word atta time</title>
     <link rel="stylesheet" href="stylesheets/index.css">
@@ -10,6 +11,26 @@
 
 <body>
     <div id="root"></div>
+
+    <script>
+        window.addEventListener('load', () => {
+            registerSW();
+        });
+
+        // Register the Service Worker
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    await navigator
+                        .serviceWorker
+                        .register('serviceworker.js');
+                }
+                catch (e) {
+                    console.log('SW registration failed');
+                }
+            }
+        }
+    </script>
 
     <!-- IMPORTING REACT -->
     <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>

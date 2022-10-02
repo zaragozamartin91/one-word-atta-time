@@ -35,7 +35,7 @@ export default class DocumentPage {
      * @returns {Array<Prhase>} This page's phrases
      */
     get phrases() {
-        const pageText = this.lines.reduce((accum, curr) => accum.concat(' ', curr))
+        const pageText = this.lines.reduce((accum, curr) => accum.concat(' ', curr), '')
         const eliRex = /\.{2,}/
         const eliStub = '__3ll1p__'
         const curatedText = pageText.replace(eliRex, eliStub)
