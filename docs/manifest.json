@@ -1,0 +1,16 @@
+{
+    "short_name": "OneWordAttaTime",
+    "name": "One word atta time",
+    "icons": [
+      {
+        "src": "wordicon.png",
+        "sizes": "180x180",
+        "type": "image/png"
+      }
+    ],
+    "description": "App for reading files one word at a time",
+    "start_url": "/one-word-atta-time/index.html",
+    "id": "/one-word-atta-time/index.html",
+    "display": "fullscreen",
+    "orientation": "portrait"
+  }
