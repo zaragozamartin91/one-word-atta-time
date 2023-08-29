@@ -137,7 +137,7 @@ class WordPlayer extends React.Component {
     componentDidMount() {
         /* If we got null document session data, redirect to main site */
         if (!this.documentReady) {
-            window.location.href = '/'
+            window.location.href = '/one-word-atta-time'
         }
     }
 }

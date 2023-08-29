@@ -47,6 +47,10 @@ export default class DocumentContent {
         return this.documentPages.flatMap(dp => dp.phrases)
     }
 
+    get text() {
+        return this.lines.reduce((a, b) => a + b)
+    }
+
     /**
      * Creates a DocumentContent reference from a pure object
      * @param {{documentPages: Array<{page: number, lines: Array<String>}>}} param0 

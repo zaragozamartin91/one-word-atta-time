@@ -27,6 +27,15 @@ var SuccessPrompt = function SuccessPrompt(props) {
                     null,
                     'Read my file'
                 )
+            ),
+            React.createElement(
+                'a',
+                { href: 'text_2_speech_demo.html' },
+                React.createElement(
+                    'button',
+                    null,
+                    'Text 2 speech demo'
+                )
             )
         );
     } else if (props.fileParseError) {
@@ -73,16 +82,7 @@ var Main = function (_React$Component) {
                     'Let me read that file for you'
                 ),
                 React.createElement('input', { onChange: this.onFileInputChange.bind(this), type: 'file', name: 'textFileInput', id: 'input' }),
-                React.createElement(SuccessPrompt, { fileParseSuccess: this.state.fileParseSuccess, fileParseError: this.state.fileParseError }),
-                React.createElement(
-                    'a',
-                    { href: 'text_2_speech_demo.html' },
-                    React.createElement(
-                        'button',
-                        null,
-                        'Text 2 speech demo'
-                    )
-                )
+                React.createElement(SuccessPrompt, { fileParseSuccess: this.state.fileParseSuccess, fileParseError: this.state.fileParseError })
             );
         }
     }, {
