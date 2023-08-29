@@ -30,6 +30,7 @@ class Main extends React.Component {
 
                 <input onChange={this.onFileInputChange.bind(this)} type="file" name="textFileInput" id="input" />
                 <SuccessPrompt fileParseSuccess={this.state.fileParseSuccess} fileParseError={this.state.fileParseError} />
+                <a href="text_2_speech_demo.html"><button >Text 2 speech demo</button></a>
             </div>
         )
     }
