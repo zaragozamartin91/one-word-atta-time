@@ -10,7 +10,7 @@ import SessionStorage from "../SessionStorage.js";
 import ReaderConfig from '../ReaderConfig.js';
 
 var WordsPerMinuteSelector = function WordsPerMinuteSelector(props) {
-    var optionValues = [50, 100, 200, 300, 400];
+    var optionValues = [50, 100, 150, 200, 250, 300, 400];
     var options = optionValues.map(function (v) {
         return React.createElement(
             "option",

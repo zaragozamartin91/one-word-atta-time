@@ -2,7 +2,7 @@ import SessionStorage from "../SessionStorage.js"
 import ReaderConfig from '../ReaderConfig.js'
 
 const WordsPerMinuteSelector = props => {
-    const optionValues = [50, 100, 200, 300, 400]
+    const optionValues = [50, 100, 150, 200, 250, 300, 400]
     const options = optionValues.map(v => {
         return (<option value={v} selected={props.selected == v}>{v}</option>)
     })

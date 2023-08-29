@@ -82,8 +82,10 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
+  console.log('Addr is ', addr)
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   console.log('Listening on ' + bind);
+  console.log(`Access the app from http://localhost:${addr.port}/one-word-atta-time`)
 }
